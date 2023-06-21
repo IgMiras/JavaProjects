@@ -36,7 +36,7 @@ public class Universidade {
     
     public void addTecnico(String nome, String nivel, String funcao, String depto){
         for (int i=0; departamentos[i] != null; i++){
-            if (departamentos[i].nome.equalsIgnoreCase(depto)){
+            if (departamentos[i].getNome().equalsIgnoreCase(depto)){
                 departamentos[i].addTecnico(nome, nivel, funcao, depto);
                 return;
             }
@@ -46,7 +46,7 @@ public class Universidade {
     
     public void addDocenteEfetivo(String nome, String nivel, String titulacao, String area, String depto){
         for (int i=0; departamentos[i] != null; i++){
-            if (departamentos[i].nome.equalsIgnoreCase(depto)){
+            if (departamentos[i].getNome().equalsIgnoreCase(depto)){
                 departamentos[i].addDocenteEfetivo(nome, nivel, titulacao, area, depto);
                 return;
             }
@@ -56,7 +56,7 @@ public class Universidade {
     
     public void addDocenteSubstituto(String nome, String nivel, String titulacao, int cargaHoraria, String depto){
         for (int i=0; departamentos[i] != null; i++){
-            if (departamentos[i].nome.equalsIgnoreCase(depto)){
+            if (departamentos[i].getNome().equalsIgnoreCase(depto)){
                 departamentos[i].addDocenteSubstituto(nome, nivel, titulacao, cargaHoraria, depto);
                 return;
             }
@@ -78,9 +78,9 @@ public class Universidade {
             relatorio = relatorio+departamentos[i].getNome()+":\n";
             float gastoTotal = 0;
             
-            for (int j=0; j < departamentos[i].cont; j++){
-                relatorio = relatorio+"nome: "+departamentos[i].funcionarios[j].nome+"\nSalario: "+departamentos[i].funcionarios[j].calcularSalario()+"\n";
-                gastoTotal = gastoTotal + departamentos[i].funcionarios[j].calcularSalario();
+            for (int j=0; j < departamentos[i].getCont(); j++){
+                relatorio = relatorio+"nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\nSalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\n";
+                gastoTotal = gastoTotal + departamentos[i].getFuncionarios()[j].calcularSalario();
             }
             relatorio = relatorio+"GASTO TOTAL: "+gastoTotal+"\n\n";
         }
@@ -91,15 +91,16 @@ public class Universidade {
         String relatorio = "";
         int numFuncionarios=0;
         for (int i=0; i < cont; i++){
-            relatorio = relatorio+departamentos[i].nome+":\n";
+            relatorio = relatorio+departamentos[i].getNome()+":\n";
             float gastoTotal = 0;
             
-            for (int j=0; j < departamentos[i].cont; j++){
-                gastoTotal = gastoTotal + departamentos[i].funcionarios[j].calcularSalario();
+            for (int j=0; j < departamentos[i].getCont(); j++){
+                gastoTotal = gastoTotal + departamentos[i].getFuncionarios()[j].calcularSalario();
                 numFuncionarios++;
             }
             relatorio = relatorio+"NÚMERO DE FUNCIONARIOS: "+numFuncionarios+"\n";
             relatorio = relatorio+"GASTO TOTAL: "+gastoTotal+"\n\n";
+            numFuncionarios=0;
         }
         return relatorio;
     }
@@ -111,16 +112,17 @@ public class Universidade {
         for (int i=0; i < cont; i++){
             float gastoDepto = 0;
             
-            for (int j=0; j < departamentos[i].cont; j++){
-                gastoDepto = gastoDepto + departamentos[i].funcionarios[j].calcularSalario();
+            for (int j=0; j < departamentos[i].getCont(); j++){
+                gastoDepto = gastoDepto + departamentos[i].getFuncionarios()[j].calcularSalario();
                 numFuncionarios++;
             }
             
             if (gastoDepto < gastoEspecifico){
-                relatorio = relatorio+departamentos[i].nome+":\n";
+                relatorio = relatorio+departamentos[i].getNome()+":\n";
                 relatorio = relatorio+"NÚMERO DE FUNCIONARIOS: "+numFuncionarios+"\n";
                 relatorio = relatorio+"GASTO TOTAL: "+gastoDepto+"\n\n";
             }
+            numFuncionarios = 0;
         }
         return relatorio;
     }
@@ -130,9 +132,9 @@ public class Universidade {
         
         for (int i=0; i<cont; i++){
             
-            for(int j=0; j<departamentos[i].cont; j++){
-                if ((departamentos[i].funcionarios[j].calcularSalario()) < salarioEspecifico){
-                    relatorio = relatorio+"Nome: "+departamentos[i].funcionarios[j].nome+"\tID: "+departamentos[i].funcionarios[j].id+"\tsalario: "+departamentos[i].funcionarios[j].calcularSalario()+"\tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for(int j=0; j<departamentos[i].getCont(); j++){
+                if ((departamentos[i].getFuncionarios()[j].calcularSalario()) < salarioEspecifico){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                 }
             }
         }
@@ -144,8 +146,8 @@ public class Universidade {
         
         for (int i=0; i<cont; i++){
             
-            for(int j=0; j<departamentos[i].cont; j++){
-                    relatorio = relatorio+"Nome: "+departamentos[i].funcionarios[j].nome+"\tID: "+departamentos[i].funcionarios[j].id+"\tsalario: "+departamentos[i].funcionarios[j].calcularSalario()+"\tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for(int j=0; j<departamentos[i].getCont(); j++){
+                relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
             }
         }
         return relatorio;
@@ -156,9 +158,9 @@ public class Universidade {
         
         for (int i=0; i<cont; i++){
             
-            for(int j=0; j<departamentos[i].cont; j++){
-                if (departamentos[i].funcionarios[j].tipo.equalsIgnoreCase("Tecnico")){
-                    relatorio = relatorio+"Nome: "+departamentos[i].funcionarios[j].nome+"\tID: "+departamentos[i].funcionarios[j].id+"\tsalario: "+departamentos[i].funcionarios[j].calcularSalario()+"\tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for(int j=0; j<departamentos[i].getCont(); j++){
+                if (departamentos[i].getFuncionarios()[j].getTipo().equalsIgnoreCase("Tecnico")){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                 }
             }
         }
@@ -170,9 +172,9 @@ public class Universidade {
         
         for (int i=0; i<cont; i++){
             
-            for(int j=0; j<departamentos[i].cont; j++){
-                if (departamentos[i].funcionarios[j].tipo.contains("Docente")){
-                    relatorio = relatorio+"Nome: "+departamentos[i].funcionarios[j].nome+"\tID: "+departamentos[i].funcionarios[j].id+"\tsalario: "+departamentos[i].funcionarios[j].calcularSalario()+"\tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for(int j=0; j<departamentos[i].getCont(); j++){
+                if (departamentos[i].getFuncionarios()[j].getTipo().contains("Docente")){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                 }
             }
         }
@@ -184,9 +186,9 @@ public class Universidade {
         
         for (int i=0; i<cont; i++){
             
-            for(int j=0; j<departamentos[i].cont; j++){
-                if (departamentos[i].funcionarios[j].tipo.equalsIgnoreCase("Docente Efetivo")){
-                    relatorio = relatorio+"Nome: "+departamentos[i].funcionarios[j].nome+"\tID: "+departamentos[i].funcionarios[j].id+"\t salario: "+departamentos[i].funcionarios[j].calcularSalario()+"\tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for(int j=0; j<departamentos[i].getCont(); j++){
+                if (departamentos[i].getFuncionarios()[j].getTipo().equalsIgnoreCase("Docente Efetivo")){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                 }
             }
         }
@@ -198,9 +200,9 @@ public class Universidade {
         
         for (int i=0; i<cont; i++){
             
-            for(int j=0; j<departamentos[i].cont; j++){
-                if (departamentos[i].funcionarios[j].tipo.equalsIgnoreCase("Docente Substituto")){
-                    relatorio = relatorio+"Nome: "+departamentos[i].funcionarios[j].nome+"\tID: "+departamentos[i].funcionarios[j].id+"\t salario: "+departamentos[i].funcionarios[j].calcularSalario()+"\tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for(int j=0; j<departamentos[i].getCont(); j++){
+                if (departamentos[i].getFuncionarios()[j].getTipo().equalsIgnoreCase("Docente Substituto")){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                 }
             }
         }
@@ -211,12 +213,12 @@ public class Universidade {
         String relatorio = "";
         float gastoTotal=0;
         for (int i=0; i<cont; i++){
-            if (departamentos[i].codigo.equalsIgnoreCase(codigo)){
+            if (departamentos[i].getCodigo().equalsIgnoreCase(codigo)){
                 
-                relatorio = relatorio+departamentos[i].nome+":\n";
-                for (int j=0; j<departamentos[i].cont; j++){
-                    relatorio = relatorio+"Funcionario "+j+": "+departamentos[i].funcionarios[j].nome+"\n";
-                    gastoTotal = gastoTotal + departamentos[i].funcionarios[j].calcularSalario();
+                relatorio = relatorio+departamentos[i].getNome()+":\n";
+                for (int j=0; j<departamentos[i].getCont(); j++){
+                    relatorio = relatorio+"Funcionario "+j+": "+departamentos[i].getFuncionarios()[j].getNome()+"\n";
+                    gastoTotal = gastoTotal + departamentos[i].getFuncionarios()[j].calcularSalario();
                 }
                 relatorio = relatorio+"GASTO TOTAL: "+gastoTotal+"\n";
                 return relatorio;
@@ -228,9 +230,9 @@ public class Universidade {
     public String buscarFuncionarioCodigo(String codigo){
         String relatorio = "";
         for (int i=0; i<cont; i++){
-            for (int j=0; j<departamentos[i].cont; j++){
-                if (departamentos[i].funcionarios[j].id.equalsIgnoreCase(codigo)){
-                    relatorio = "Nome: "+departamentos[i].funcionarios[j].nome+"/tNivel: "+departamentos[i].funcionarios[j].nivel+"/tTipo: "+departamentos[i].funcionarios[j].tipo+"/tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for (int j=0; j<departamentos[i].getCont(); j++){
+                if (departamentos[i].getFuncionarios()[j].getID().equalsIgnoreCase(codigo)){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                     return relatorio;
                 }
             }
@@ -241,9 +243,9 @@ public class Universidade {
     public String buscarFuncionarioNome(String nome){
         String relatorio = "";
         for (int i=0; i<cont; i++){
-            for (int j=0; j<departamentos[i].cont; j++){
-                if (departamentos[i].funcionarios[j].nome.equalsIgnoreCase(nome)){
-                    relatorio = "Nome: "+departamentos[i].funcionarios[j].nome+"/tNivel: "+departamentos[i].funcionarios[j].nivel+"/tTipo: "+departamentos[i].funcionarios[j].tipo+"/tDepto: "+departamentos[i].funcionarios[j].departamento+"\n";
+            for (int j=0; j<departamentos[i].getCont(); j++){
+                if (departamentos[i].getFuncionarios()[j].getNome().equalsIgnoreCase(nome)){
+                    relatorio = relatorio+"Nome: "+departamentos[i].getFuncionarios()[j].getNome()+"\tID: "+departamentos[i].getFuncionarios()[j].getID()+"\tsalario: "+departamentos[i].getFuncionarios()[j].calcularSalario()+"\tDepto: "+departamentos[i].getFuncionarios()[j].getDepto()+"\n";
                     return relatorio;
                 }
             }

@@ -9,10 +9,10 @@ package models;
  * @author IgMiras
  */
 public class Departamento {
-    public String codigo;
-    public String nome;
-    public Funcionario[] funcionarios;
-    public int cont;
+    private String codigo;
+    private String nome;
+    private Funcionario[] funcionarios;
+    private int cont;
     private final int MAX = 100;
     
     public Departamento(String nome, String codigo){
@@ -26,6 +26,18 @@ public class Departamento {
         return this.nome;
     }
     
+    public String getCodigo(){
+        return this.codigo;
+    }
+    
+    public Funcionario[] getFuncionarios(){
+        return this.funcionarios;
+    }
+    
+    public int getCont(){
+        return this.cont;
+    }
+    
     public String getDados(){
         String dados = "Nome: "+this.nome+" Codigo: "+this.codigo;
         return dados;
@@ -34,8 +46,8 @@ public class Departamento {
     public void addTecnico(String nome, String nivel, String funcao, String depto){
         if (cont < MAX){
             funcionarios[cont] = new Tecnico(nome, nivel, funcao, depto);
-            funcionarios[cont].id = this.codigo+this.cont;
-            funcionarios[cont].salario = funcionarios[cont].calcularSalario();
+            funcionarios[cont].setID(this.codigo+this.cont);
+            funcionarios[cont].setSalario(funcionarios[cont].calcularSalario());
             System.out.println("Tecnico adicionado!");
             this.cont++;
         }
@@ -44,8 +56,8 @@ public class Departamento {
     public void addDocenteEfetivo(String nome, String nivel, String titulacao, String area, String depto){
         if (cont < MAX){
             funcionarios[cont] = new DocenteEfetivo(nome, nivel, titulacao, area, depto);
-            funcionarios[cont].id = this.codigo+this.cont;
-            funcionarios[cont].salario = funcionarios[cont].calcularSalario();
+            funcionarios[cont].setID(this.codigo+this.cont);
+            funcionarios[cont].setSalario(funcionarios[cont].calcularSalario());
             System.out.println("Docente Efetivo adicionado!");
             this.cont++;
         }
@@ -54,8 +66,8 @@ public class Departamento {
     public void addDocenteSubstituto(String nome, String nivel, String titulacao, int cargaHoraria, String depto){
         if (cont < MAX){
             funcionarios[cont] = new DocenteSubstituto(nome, nivel, titulacao, cargaHoraria, depto);
-            funcionarios[cont].id = this.codigo+this.cont;
-            funcionarios[cont].salario = funcionarios[cont].calcularSalario();
+            funcionarios[cont].setID(this.codigo+this.cont);
+            funcionarios[cont].setSalario(funcionarios[cont].calcularSalario());
             System.out.println("Docente Substituto adicionado!");
             this.cont++;
         }

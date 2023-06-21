@@ -9,12 +9,12 @@ package models;
  * @author IgMiras
  */
 public abstract class Funcionario {
-    public String id;
-    public String nome;
-    public float salario;
-    public String nivel;
-    public String tipo;
-    public String departamento;
+    protected String id;
+    protected String nome;
+    protected float salario;
+    protected String nivel;
+    protected String tipo;
+    protected String departamento;
     public static final float SALARIO_BASE = 5000;
     
     public Funcionario(){
@@ -24,6 +24,30 @@ public abstract class Funcionario {
         nivel = "Não definido";
         tipo = "Não definido";
     };
+    
+    public String getNome(){
+        return this.nome;
+    }
+    
+    public String getID(){
+        return this.id;
+    }
+    
+    public String getTipo(){
+        return this.tipo;
+    }
+    
+    public String getDepto(){
+        return this.departamento;
+    }
+    
+    public void setID(String id){
+        this.id = id;
+    }
+    
+    public void setSalario(float valor){
+        this.salario = valor;
+    }
     
     public abstract float calcularSalario();
 }
